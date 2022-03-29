@@ -9,6 +9,18 @@ const sounds = {
   blue: new Audio('blue.mp3'),
 }
 
+const sendEvent = (event, data) => {
+  try {
+    window.splitbee?.track(event, data)
+  } catch {}
+}
+
+const setUser = username => {
+  try {
+    window.splitbee?.user.set({ username })
+  } catch {}
+}
+
 const pushRandomColor = targetArray => {
   const color =
     possibleColors[Math.floor(Math.random() * possibleColors.length)]
@@ -20,7 +32,7 @@ const playSound = color => {
   return sounds[color].play()
 }
 
-const sequence = []
+let sequence = []
 
 const playSequence = async () => {
   await delay()
@@ -41,34 +53,70 @@ const checkInput = () => sequence.join().includes(userSequence.join())
 
 colors.addEventListener('click', async event => {
   const color = event.target.id
+  sendEvent('Clicked color sequence', {
+    color,
+  })
   await playSound(color)
   userSequence.push(event.target.id)
   const correctInput = checkInput()
   if (correctInput) {
     if (sequence.length === userSequence.length) {
-      console.count('level')
       userSequence = []
       pushRandomColor(sequence)
       await delay(500)
       await playSequence()
     }
   } else {
-    alert('errou')
+    const level = sequence.length - 1
+    sendEvent('End game', {
+      sequence,
+      userSequence,
+      level,
+    })
+    toggleEndMenu(level)
+    toggleOverlay()
   }
 })
 
-const hideMenu = () => {
-  const menu = document.querySelector('.menu')
-  menu.classList.add('hidden')
+const toggleStartMenu = () => {
+  const menu = document.querySelector('.start-menu')
+  menu.classList.toggle('hidden')
+}
+
+const toggleEndMenu = (level = 0) => {
+  const menu = document.querySelector('.end-menu')
+  menu.classList.toggle('hidden')
+  const score = document.getElementById('score')
+  score.innerText = level
+}
+
+const toggleOverlay = () => {
   const overlay = document.querySelector('.overlay')
-  overlay.classList.add('hidden')
+  overlay.classList.toggle('hidden')
 }
 
 const init = () => {
-  hideMenu()
+  userSequence = []
+  sequence = []
+  sendEvent('Start game')
+  toggleStartMenu()
+  toggleOverlay()
   pushRandomColor(sequence)
   playSequence()
 }
 
+const finish = event => {
+  event.preventDefault()
+  const input = document.getElementById('username')
+  if (input.value.length >= 3) {
+    setUser(input.value)
+    toggleEndMenu()
+    toggleStartMenu()
+  }
+}
+
 const start = document.getElementById('start')
 start.addEventListener('click', init)
+
+const end = document.getElementById('end')
+end.addEventListener('click', finish)

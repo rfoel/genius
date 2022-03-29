@@ -1,8 +1,12 @@
-html,
-body {
-  height: 100%;
+* {
   margin: 0;
   padding: 0;
+}
+
+html,
+body {
+  color: var(--black);
+  height: 100%;
   position: relative;
 }
 
@@ -11,15 +15,14 @@ body {
   --red: #ff6b6b;
   --yellow: #ffd93d;
   --blue: #4d96ff;
+  --black: #333333;
   --white: #ffffff;
 }
 
 .overlay {
   align-items: center;
-
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-
   justify-content: center;
   position: absolute;
   left: 0;
@@ -33,7 +36,7 @@ body {
   align-items: center;
   display: flex;
   justify-content: center;
-
+  flex-direction: column;
   background-color: var(--white);
   height: 100px;
   width: 100px;
@@ -42,28 +45,50 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding: 32px;
 }
 
 .hidden {
   display: none;
   visibility: hidden;
 }
+
 .menu button {
   background-color: var(--green);
-  border: 0;
+  border: 1px solid var(--green);
   color: var(--white);
   padding: 8px 16px;
+  width: 100%;
+}
+
+.menu label {
+  font-size: 12px;
+}
+
+.menu input {
+  border: 1px solid var(--black);
+  width: 100%;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.menu input:invalid {
+  border-color: var(--red);
 }
 
 .colors {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row: auto auto;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
   height: 100%;
   position: relative;
 }
 
 .color {
+  border: 0;
+  padding: 0;
   border: 0;
 }
 
