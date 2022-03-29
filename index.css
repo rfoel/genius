@@ -1,0 +1,94 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+:root {
+  --green: #6bcb77;
+  --red: #ff6b6b;
+  --yellow: #ffd93d;
+  --blue: #4d96ff;
+  --white: #ffffff;
+}
+
+.overlay {
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.menu {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  background-color: var(--white);
+  height: 100px;
+  width: 100px;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+.menu button {
+  background-color: var(--green);
+  border: 0;
+  color: var(--white);
+  padding: 8px 16px;
+}
+
+.colors {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+  position: relative;
+}
+
+.color {
+  border: 0;
+}
+
+#green {
+  background-color: var(--green);
+  flex: 50%;
+}
+
+#red {
+  background-color: var(--red);
+  flex: 50%;
+}
+
+#yellow {
+  background-color: var(--yellow);
+  flex: 50%;
+}
+
+#blue {
+  background-color: var(--blue);
+  flex: 50%;
+}
+
+button:active,
+.active {
+  filter: brightness(150%);
+  transition: filter 100ms linear;
+}
